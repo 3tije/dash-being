@@ -1,0 +1,16 @@
+{
+  "name": "BEING Biro Psikologi",
+  "short_name": "BEING",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#164f43",
+  "icons": [
+    {
+      "src": "assets/being-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
