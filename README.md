@@ -95,3 +95,20 @@ Unggah seluruh isi folder ini ke repository BEING. Jangan hanya mengunggah `inde
 ## Catatan keamanan
 
 Versi ini cocok untuk jajak pendapat, evaluasi layanan, dan survei kebutuhan nonrahasia. Jangan menggunakannya untuk diagnosis klinis, rekam medis, atau data psikologis yang sangat sensitif tanpa penguatan autentikasi, persetujuan, retensi data, dan kebijakan privasi.
+
+
+# Upgrade v1.2 — Admin Tertutup & Survei Privat
+
+1. Unggah semua file web ke GitHub dan timpa versi lama.
+2. Ganti seluruh `Code.gs` di Apps Script dengan versi v1.2.
+3. Jalankan fungsi `upgradeBeingVoiceV12()` satu kali. Fungsi ini menambah kolom tanpa menghapus survei lama.
+4. Deploy ulang melalui **Manage deployments → Edit → New version → Deploy**.
+5. Bersihkan cache atau buka Incognito.
+
+## Pilihan akses survei
+
+- **Publik**: tampil pada halaman Suara Anda.
+- **Link khusus**: tidak tampil untuk umum; hanya terbuka dengan link rahasia dari admin.
+- **Kode akses**: tidak tampil untuk umum; peserta memasukkan kode yang dibagikan admin.
+
+Pada menu Kelola Survei tersedia tombol **WhatsApp** dan **Salin Link**.

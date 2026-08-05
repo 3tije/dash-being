@@ -25,7 +25,6 @@
       <button data-panel="surveys">Kelola Survei</button>
       <button data-panel="builder">Pertanyaan</button>
       <button data-panel="results">Hasil & Grafik</button>
-      <button data-panel="settings">Pengaturan</button>
       <button id="logoutBtn">Keluar</button>
     </nav>
   </aside>
@@ -83,15 +82,6 @@
       <div class="admin-card"><div id="resultSummary" class="chart-list"></div></div>
       <div class="admin-card"><div class="admin-card-head"><h2>Respons individual</h2></div><div id="responsesTable" class="table-wrap"></div></div>
     </section>
-
-    <section class="admin-panel" id="panel-settings">
-      <div class="admin-card">
-        <div class="admin-card-head"><h2>Konfigurasi Sistem</h2></div>
-        <p>Alamat Apps Script aktif:</p><code id="apiDisplay"></code>
-        <p style="margin-top:24px">PIN admin disimpan pada Script Properties Apps Script, bukan di halaman GitHub.</p>
-        <button class="voice-btn secondary" id="changePinBtn">Ganti PIN Admin</button>
-      </div>
-    </section>
   </main>
 </div>
 
@@ -103,6 +93,17 @@
       <div class="form-field"><label>Judul Survei</label><input id="editTitle" class="form-control" required></div>
       <div class="form-field"><label>Deskripsi</label><textarea id="editDescription" class="form-control"></textarea></div>
       <div class="form-field"><label>Kategori</label><input id="editCategory" class="form-control" placeholder="Contoh: Human Development"></div>
+      <div class="form-field"><label>Akses Survei</label>
+        <select id="editAccessMode" class="form-control">
+          <option value="public">Publik — tampil di Suara Anda</option>
+          <option value="link">Link khusus — hanya orang yang menerima link</option>
+          <option value="code">Kode akses — peserta memasukkan kode</option>
+        </select>
+      </div>
+      <div class="form-field" id="accessCodeWrap"><label>Kode Akses</label>
+        <div style="display:flex;gap:8px"><input id="editAccessCode" class="form-control" maxlength="20" placeholder="Contoh: BEING26"><button type="button" class="voice-btn secondary small" id="generateCodeBtn">Buat Kode</button></div>
+        <small>Kode akan disertakan saat dibagikan melalui WhatsApp.</small>
+      </div>
       <div class="form-field"><label>Identitas Responden</label><select id="editIdentity" class="form-control"><option value="anonymous">Anonim</option><option value="optional">Opsional</option><option value="required">Wajib nama</option></select></div>
       <div class="form-field"><label>Status</label><select id="editStatus" class="form-control"><option value="draft">Draf</option><option value="active">Aktif / dipublikasikan</option><option value="closed">Ditutup</option></select></div>
       <div class="form-field"><label>Tanggal Berakhir (opsional)</label><input id="editEndDate" class="form-control" type="date"></div>
