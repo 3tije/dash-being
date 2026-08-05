@@ -34,8 +34,8 @@
           <h1>Being in the world and being beyond the world.</h1>
           <p>Ruang layanan psikologi, asesmen, konsultasi, pelatihan, dan pengembangan manusia untuk individu, kelompok, serta organisasi.</p>
           <div class="actions">
-            <a class="btn primary" id="dashboardConsultation" href="konsultasi.html">Konsultasi</a>
-            <a class="btn secondary" id="dashboardHds" href="human-development-series.html">Human Development Series</a>
+            <a class="btn primary" id="dashboardConsultation" data-config-link="CONSULTATION_URL" href="konsultasi.html">Konsultasi</a>
+            <a class="btn secondary" id="dashboardHds" data-config-link="LMS_URL" href="human-development-series.html">Human Development Series</a>
           </div>
           <div class="trust">
             <span>Profesional</span><span>Etis</span><span>Ilmiah</span><span>Humanis</span>
@@ -53,12 +53,12 @@
 
     <section class="quick-access">
       <div class="container access-grid">
-        <a href="konsultasi.html" class="access-card">
+        <a data-config-link="CONSULTATION_URL" href="konsultasi.html" class="access-card">
           <span class="icon">♡</span>
           <div><small>LAYANAN INDIVIDU & KELOMPOK</small><h3>Konsultasi Psikologi</h3><p>Ruang aman untuk memahami kebutuhan, mendapatkan pendampingan, dan merancang langkah berikutnya.</p></div>
           <b>→</b>
         </a>
-        <a href="human-development-series.html" class="access-card dark">
+        <a data-config-link="LMS_URL" href="human-development-series.html" class="access-card dark">
           <span class="icon">↗</span>
           <div><small>PROGRAM PEMBELAJARAN</small><h3>Human Development Series</h3><p>Pelatihan terstruktur untuk meningkatkan kapasitas pribadi, profesional, komunitas, dan organisasi.</p></div>
           <b>→</b>
@@ -143,7 +143,7 @@
         </div>
         <div class="body-copy">
           <p>Ikuti jajak pendapat, evaluasi layanan, dan survei kebutuhan yang dikelola langsung melalui sistem BEING.</p>
-          <div class="actions"><a class="btn primary" id="dashboardVoice" href="suara-anda.html">Masuk ke Suara Anda</a></div>
+          <div class="actions"><a class="btn primary" id="dashboardVoice" data-config-link="VOICE_URL" href="suara-anda.html">Masuk ke Suara Anda</a></div>
         </div>
       </div>
     </section>
@@ -170,7 +170,7 @@
       <div><a href="#beranda">Kembali ke atas ↑</a></div>
     </div>
   </footer>
-  <script src="assets/config.js"></script>
-  <script src="assets/app.js"></script>
+  <script src="assets/config.js?v=1.1"></script>
+  <script src="assets/app.js?v=1.1"></script>
 </body>
 </html>

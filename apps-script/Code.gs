@@ -46,7 +46,12 @@ function doPost(e){
   try{
     const req=JSON.parse((e.postData&&e.postData.contents)||"{}");
     const action=req.action||"", payload=req.payload||{}, token=req.token||"";
-    const publicActions=["public.listSurveys","public.getSurvey","public.submitResponse"];
+    const publicActions=[
+      "public.listSurveys",
+      "public.getSurvey",
+      "public.submitResponse",
+      "admin.login"
+    ];
     if(publicActions.indexOf(action)<0) requireAdmin_(token);
 
     let data;

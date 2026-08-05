@@ -1,8 +1,19 @@
-const btn=document.getElementById('menuBtn');const nav=document.getElementById('navMenu');btn.addEventListener('click',()=>nav.classList.toggle('open'));document.querySelectorAll('#navMenu a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+const btn=document.getElementById('menuBtn');
+const nav=document.getElementById('navMenu');
+if(btn&&nav){
+  btn.addEventListener('click',()=>nav.classList.toggle('open'));
+  document.querySelectorAll('#navMenu a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+}
+
 document.addEventListener("DOMContentLoaded",()=>{
- const c=window.BEING_CONFIG||{};
- const set=(id,url)=>{const el=document.getElementById(id);if(el&&url)el.href=url};
- set("dashboardConsultation",c.CONSULTATION_URL);
- set("dashboardHds",c.LMS_URL);
- set("dashboardVoice",c.VOICE_URL);
+  const cfg=window.BEING_CONFIG||{};
+  document.querySelectorAll("[data-config-link]").forEach(el=>{
+    const key=el.dataset.configLink;
+    const url=(cfg[key]||"").trim();
+    if(url) el.href=url;
+    if(/^https?:\/\//i.test(url)){
+      el.target="_blank";
+      el.rel="noopener noreferrer";
+    }
+  });
 });

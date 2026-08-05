@@ -1,3 +1,11 @@
+# BEING Voice Full v1.1 — Perbaikan Login dan Link
+
+Perbaikan utama:
+- Login admin kini dapat dilakukan tanpa token lama.
+- Semua tombol Konsultasi dan LMS membaca `assets/config.js`.
+- Link eksternal otomatis dibuka di tab baru.
+- Cache-busting ditambahkan agar perubahan GitHub lebih cepat terbaca.
+
 # BEING Voice — Versi Penuh
 
 Paket ini berisi:
