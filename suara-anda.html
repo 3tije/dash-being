@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#164f43">
+  <meta name="description" content="BEING Voice — ruang mendengar, memahami, dan bertumbuh.">
+  <title>Suara Anda | BEING Voice</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/voice.css">
+</head>
+<body class="voice-page">
+<header class="voice-topbar">
+  <div class="voice-shell voice-nav">
+    <a class="voice-brand" href="index.html"><img src="assets/being-logo.png" alt="BEING Biro Psikologi"></a>
+    <nav class="voice-links">
+      <a href="index.html">Beranda</a>
+      <a href="konsultasi.html">Konsultasi</a>
+      <a href="human-development-series.html">Human Development Series</a>
+      <a class="pill" href="#survei">Isi Survei</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="voice-hero">
+    <div class="voice-shell voice-hero-grid">
+      <div>
+        <span class="voice-kicker">BEING VOICE • SUARA ANDA</span>
+        <h1>Ruang mendengar, memahami, dan bertumbuh.</h1>
+        <p>Pendapat Anda membantu BEING memahami kebutuhan masyarakat, memperbaiki layanan, dan menghadirkan program pengembangan manusia yang lebih relevan.</p>
+      </div>
+      <aside class="voice-quote">
+        <b>“</b>
+        <p>Setiap suara menyimpan pengalaman. Setiap pengalaman dapat menjadi jalan menuju layanan yang lebih manusiawi.</p>
+        <small>BEING Biro Psikologi</small>
+      </aside>
+    </div>
+  </section>
+
+  <section class="voice-section" id="survei">
+    <div class="voice-shell">
+      <div class="voice-section-head">
+        <div><span class="voice-kicker">JAJAK PENDAPAT AKTIF</span><h2>Pilih survei yang ingin Anda isi.</h2></div>
+        <p>Identitas hanya diminta apabila pembuat survei mengaktifkannya. BEING menjaga kerahasiaan data dan menggunakan jawaban untuk tujuan layanan serta pengembangan program.</p>
+      </div>
+      <div id="surveyList" class="survey-grid">
+        <div class="loading-state">Memuat survei BEING…</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="surveyModal" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><span class="voice-kicker" id="modalCategory">SURVEI BEING</span><h2 id="modalTitle">Judul Survei</h2><p id="modalDescription"></p></div>
+      <button class="icon-btn" id="closeModal" aria-label="Tutup">×</button>
+    </div>
+    <form id="surveyForm">
+      <input type="hidden" id="surveyId">
+      <div id="identityFields"></div>
+      <div id="questionFields"></div>
+      <div id="submitNotice"></div>
+      <div class="form-actions">
+        <button class="voice-btn secondary" type="button" id="cancelSurvey">Batal</button>
+        <button class="voice-btn primary" type="submit" id="submitSurvey">Kirim Suara Anda</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer class="voice-footer">
+  <div class="voice-shell voice-footer-inner">
+    <img src="assets/being-logo.png" alt="BEING">
+    <span>BEING Voice — suara untuk pertumbuhan manusia.</span>
+    <a href="admin.html">Admin</a>
+  </div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/voice-api.js"></script>
+<script src="assets/voice-public.js"></script>
+</body></html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="id"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#164f43"><title>Admin BEING Voice</title>
+<link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/voice.css">
+</head><body class="voice-page">
+<div id="loginView" class="admin-login">
+  <form id="loginForm" class="login-card">
+    <img src="assets/being-logo.png" alt="BEING">
+    <span class="voice-kicker">ADMIN BEING VOICE</span>
+    <h1>Masuk Admin</h1>
+    <p>Kelola survei, pertanyaan, publikasi, dan hasil jajak pendapat.</p>
+    <div class="form-field"><label>PIN Admin</label><input id="adminPin" class="form-control" type="password" required autocomplete="current-password"></div>
+    <div id="loginNotice"></div>
+    <button class="voice-btn primary" style="width:100%" type="submit">Masuk</button>
+    <a href="index.html" style="display:block;text-align:center;margin-top:16px">← Kembali ke dashboard utama</a>
+  </form>
+</div>
+
+<div id="adminView" class="admin-layout" hidden>
+  <aside class="admin-sidebar">
+    <img src="assets/being-logo.png" alt="BEING">
+    <nav class="admin-menu">
+      <button class="active" data-panel="overview">Ringkasan</button>
+      <button data-panel="surveys">Kelola Survei</button>
+      <button data-panel="builder">Pertanyaan</button>
+      <button data-panel="results">Hasil & Grafik</button>
+      <button data-panel="settings">Pengaturan</button>
+      <button id="logoutBtn">Keluar</button>
+    </nav>
+  </aside>
+  <main class="admin-main">
+    <header class="admin-header">
+      <div><span class="voice-kicker">BEING VOICE</span><h1 id="panelTitle">Ringkasan</h1></div>
+      <button class="voice-btn primary" id="newSurveyBtn">+ Buat Survei</button>
+    </header>
+
+    <section class="admin-panel active" id="panel-overview">
+      <div class="stats-grid" id="statsGrid"></div>
+      <div class="admin-card"><div class="admin-card-head"><h2>Survei terbaru</h2></div><div id="recentSurveys"></div></div>
+    </section>
+
+    <section class="admin-panel" id="panel-surveys">
+      <div class="admin-card">
+        <div class="admin-card-head"><h2>Daftar Survei</h2><button class="voice-btn primary small" id="newSurveyBtn2">Tambah</button></div>
+        <div class="table-wrap"><table class="admin-table"><thead><tr><th>Judul</th><th>Kategori</th><th>Status</th><th>Pertanyaan</th><th>Respon</th><th>Aksi</th></tr></thead><tbody id="surveyTable"></tbody></table></div>
+      </div>
+    </section>
+
+    <section class="admin-panel" id="panel-builder">
+      <div class="builder-grid">
+        <div class="admin-card">
+          <div class="admin-card-head"><h2>Pilih Survei</h2></div>
+          <select id="builderSurvey" class="form-control"></select>
+          <hr style="border:0;border-top:1px solid var(--bv-line);margin:20px 0">
+          <form id="questionForm">
+            <input type="hidden" id="questionId">
+            <div class="form-field"><label>Pertanyaan</label><textarea id="questionText" class="form-control" required></textarea></div>
+            <div class="form-field"><label>Jenis Jawaban</label>
+              <select id="questionType" class="form-control">
+                <option value="radio">Pilihan tunggal</option><option value="checkbox">Pilihan lebih dari satu</option>
+                <option value="scale5">Skala 1–5</option><option value="scale10">Skala 1–10</option>
+                <option value="yesno">Ya / Tidak</option><option value="text">Jawaban singkat</option><option value="textarea">Jawaban panjang</option>
+              </select>
+            </div>
+            <div class="form-field" id="optionsWrap"><label>Pilihan jawaban</label><textarea id="questionOptions" class="form-control" placeholder="Satu pilihan per baris"></textarea></div>
+            <label class="option"><input id="questionRequired" type="checkbox"><span>Wajib dijawab</span></label>
+            <button class="voice-btn primary" style="width:100%;margin-top:16px" type="submit">Simpan Pertanyaan</button>
+          </form>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-head"><h2>Daftar Pertanyaan</h2><span id="questionCount"></span></div>
+          <div id="questionList" class="question-builder-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="admin-panel" id="panel-results">
+      <div class="admin-card">
+        <div class="admin-card-head"><h2>Hasil Survei</h2><button class="voice-btn secondary small" id="exportCsvBtn">Unduh CSV</button></div>
+        <select id="resultSurvey" class="form-control" style="max-width:520px"></select>
+      </div>
+      <div class="admin-card"><div id="resultSummary" class="chart-list"></div></div>
+      <div class="admin-card"><div class="admin-card-head"><h2>Respons individual</h2></div><div id="responsesTable" class="table-wrap"></div></div>
+    </section>
+
+    <section class="admin-panel" id="panel-settings">
+      <div class="admin-card">
+        <div class="admin-card-head"><h2>Konfigurasi Sistem</h2></div>
+        <p>Alamat Apps Script aktif:</p><code id="apiDisplay"></code>
+        <p style="margin-top:24px">PIN admin disimpan pada Script Properties Apps Script, bukan di halaman GitHub.</p>
+        <button class="voice-btn secondary" id="changePinBtn">Ganti PIN Admin</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="surveyEditor">
+  <div class="modal-card">
+    <div class="modal-head"><div><span class="voice-kicker">EDITOR SURVEI</span><h2 id="editorTitle">Buat Survei</h2></div><button class="icon-btn" id="closeEditor">×</button></div>
+    <form id="surveyEditorForm">
+      <input type="hidden" id="editSurveyId">
+      <div class="form-field"><label>Judul Survei</label><input id="editTitle" class="form-control" required></div>
+      <div class="form-field"><label>Deskripsi</label><textarea id="editDescription" class="form-control"></textarea></div>
+      <div class="form-field"><label>Kategori</label><input id="editCategory" class="form-control" placeholder="Contoh: Human Development"></div>
+      <div class="form-field"><label>Identitas Responden</label><select id="editIdentity" class="form-control"><option value="anonymous">Anonim</option><option value="optional">Opsional</option><option value="required">Wajib nama</option></select></div>
+      <div class="form-field"><label>Status</label><select id="editStatus" class="form-control"><option value="draft">Draf</option><option value="active">Aktif / dipublikasikan</option><option value="closed">Ditutup</option></select></div>
+      <div class="form-field"><label>Tanggal Berakhir (opsional)</label><input id="editEndDate" class="form-control" type="date"></div>
+      <div class="form-actions"><button type="button" class="voice-btn secondary" id="cancelEditor">Batal</button><button type="submit" class="voice-btn primary">Simpan Survei</button></div>
+    </form>
+  </div>
+</div>
+
+<script src="assets/config.js"></script><script src="assets/voice-api.js"></script><script src="assets/voice-admin.js"></script>
+</body></html>
