@@ -59,3 +59,151 @@ footer{border-top:1px solid var(--line);padding:24px 0}.footer-grid{display:grid
   .team-gallery{grid-template-columns:1fr}
   .team-profile-card>img,.team-profile-card>a>img,.team-profile-card.featured>a>img{height:auto}
 }
+
+
+/* Team section v1.9 — full images on desktop */
+.team-gallery{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:22px;
+  align-items:stretch;
+}
+.team-profile-card{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:0 12px 34px rgba(20,60,48,.08);
+}
+.team-profile-card>a{
+  display:block;
+  background:#f3f6f3;
+}
+.team-profile-card img,
+.team-profile-card>a>img{
+  display:block;
+  width:100%;
+  border:0;
+  border-radius:0;
+}
+.team-profile-card.overview-card img{
+  height:auto;
+  aspect-ratio:805/1137;
+  object-fit:contain;
+  object-position:center top;
+  background:#f5f6f4;
+}
+.team-profile-card.person-card img,
+.team-profile-card.person-card>a>img{
+  height:460px;
+  object-fit:cover;
+  object-position:center top;
+}
+.team-profile-card.tri-card img{
+  object-fit:contain;
+  background:#f5f6f4;
+}
+.team-card-copy{
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  padding:22px 24px 25px;
+}
+.team-card-copy small{
+  color:var(--green2);
+  font-weight:800;
+  letter-spacing:.12em;
+  font-size:11px;
+}
+.team-card-copy h3{
+  margin:8px 0 10px;
+  font-size:23px;
+  line-height:1.25;
+}
+.team-card-copy p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.65;
+}
+.team-profile-link{
+  display:inline-flex;
+  margin-top:auto;
+  padding-top:15px;
+  color:var(--green);
+  font-weight:800;
+}
+@media(max-width:1050px){
+  .team-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  .team-gallery{grid-template-columns:1fr}
+  .team-profile-card.overview-card img{
+    aspect-ratio:auto;
+    height:auto;
+  }
+  .team-profile-card.person-card img,
+  .team-profile-card.person-card>a>img{
+    height:auto;
+    max-height:none;
+  }
+}
+
+
+/* Floating WhatsApp — v2.0 */
+.floating-wa{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:9999;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  min-height:54px;
+  padding:0 18px 0 12px;
+  border-radius:999px;
+  background:#25D366;
+  color:#fff;
+  font-weight:800;
+  text-decoration:none;
+  box-shadow:0 14px 34px rgba(0,0,0,.22);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.floating-wa:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 42px rgba(0,0,0,.28);
+}
+.floating-wa-icon{
+  display:grid;
+  place-items:center;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:rgba(255,255,255,.18);
+  font-size:23px;
+  line-height:1;
+}
+.floating-wa-text{
+  white-space:nowrap;
+}
+@media(max-width:600px){
+  .floating-wa{
+    right:14px;
+    bottom:14px;
+    width:56px;
+    height:56px;
+    min-height:56px;
+    padding:0;
+    justify-content:center;
+  }
+  .floating-wa-icon{
+    width:auto;
+    height:auto;
+    background:transparent;
+    font-size:27px;
+  }
+  .floating-wa-text{
+    display:none;
+  }
+}

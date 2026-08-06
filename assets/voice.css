@@ -120,3 +120,48 @@ textarea.form-control{min-height:110px;resize:vertical}
 .access-gate h2{margin:8px 0 10px;font-size:30px}.access-gate p{color:var(--bv-muted);line-height:1.6}
 .share-box{background:#f4f8f5;border:1px solid var(--bv-line);border-radius:14px;padding:13px;margin-top:12px}
 .share-box code{display:block;word-break:break-all;font-size:12px;color:var(--bv-muted)}
+
+
+/* Floating WhatsApp — v2.0 */
+.floating-wa{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:9999;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  min-height:54px;
+  padding:0 18px 0 12px;
+  border-radius:999px;
+  background:#25D366;
+  color:#fff;
+  font-weight:800;
+  text-decoration:none;
+  box-shadow:0 14px 34px rgba(0,0,0,.22);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.floating-wa:hover{transform:translateY(-3px);box-shadow:0 18px 42px rgba(0,0,0,.28)}
+.floating-wa-icon{
+  display:grid;
+  place-items:center;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:rgba(255,255,255,.18);
+  font-size:23px;
+}
+.floating-wa-text{white-space:nowrap}
+@media(max-width:600px){
+  .floating-wa{
+    right:14px;
+    bottom:14px;
+    width:56px;
+    height:56px;
+    min-height:56px;
+    padding:0;
+    justify-content:center;
+  }
+  .floating-wa-icon{width:auto;height:auto;background:transparent;font-size:27px}
+  .floating-wa-text{display:none}
+}
