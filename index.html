@@ -8,7 +8,84 @@
   <title>BEING Biro Psikologi</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/being-logo.png">
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/style.css?v=1.7">
+
+  <style>
+    .tri-team-card{
+      margin-top:28px;
+      display:grid;
+      grid-template-columns:minmax(250px,380px) 1fr;
+      gap:28px;
+      align-items:center;
+      padding:24px;
+      background:#fff;
+      border:1px solid #d8dfdb;
+      border-radius:22px;
+      box-shadow:0 14px 38px rgba(20,60,48,.10);
+    }
+    .tri-team-card img{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius:18px;
+    }
+    .tri-team-card .tri-role{
+      display:inline-block;
+      margin-bottom:10px;
+      color:#0d6c50;
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.14em;
+    }
+    .tri-team-card h3{
+      margin:0 0 8px;
+      font-size:clamp(28px,4vw,42px);
+      line-height:1.1;
+    }
+    .tri-team-card .tri-subtitle{
+      margin:0 0 18px;
+      color:#164f43;
+      font-weight:700;
+      line-height:1.6;
+    }
+    .tri-team-card p{
+      color:#65726e;
+      line-height:1.75;
+    }
+    .tri-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:9px;
+      margin:20px 0 24px;
+    }
+    .tri-tags span{
+      padding:9px 13px;
+      border-radius:999px;
+      background:#dceadf;
+      color:#164f43;
+      font-size:13px;
+      font-weight:700;
+    }
+    .tri-profile-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:46px;
+      padding:0 19px;
+      border-radius:999px;
+      background:#164f43;
+      color:#fff;
+      font-weight:800;
+      text-decoration:none;
+    }
+    @media(max-width:800px){
+      .tri-team-card{
+        grid-template-columns:1fr;
+        padding:18px;
+      }
+    }
+  </style>
+
 </head>
 <body>
   <header class="topbar">
@@ -113,13 +190,45 @@
       <div class="container">
         <div class="section-head">
           <div><span class="kicker">PENDUKUNG BEING</span><h2>Lintas profesi, satu komitmen.</h2></div>
-          <p>BEING didukung oleh psikolog, psikiater, dokter, konselor adiksi, praktisi rehabilitasi, dan profesional human resources.</p>
+          <p>BEING didukung oleh psikolog, psikiater, dokter, konselor adiksi, praktisi rehabilitasi, profesional human resources, sosiolog, trainer, penulis, dan pengembang program human development.</p>
         </div>
         <div class="team-gallery">
           <img src="assets/team.jpg" alt="Pembina dan manajemen BEING">
           <img src="assets/experts.jpg" alt="Psikolog dan pakar psikologi BEING">
           <img src="assets/health-team.jpg" alt="Psikiater, dokter, dan ahli kesehatan-adiksi BEING">
         </div>
+
+        <article class="tri-team-card">
+          <a href="tri-tjahyono-profile.png" target="_blank" rel="noopener">
+            <img src="tri-tjahyono-profile.png" alt="Profil Tri Tjahyono, S.Sos., M.Si.">
+          </a>
+          <div>
+            <span class="tri-role">HUMAN DEVELOPMENT</span>
+            <h3>Tri Tjahyono, S.Sos., M.Si.</h3>
+            <p class="tri-subtitle">
+              Sosiolog • Penyuluh Narkoba • Konselor Adiksi • Trainer • Penulis Buku • Pengembang Program P4GN
+            </p>
+            <p>
+              Berpengalaman dalam pengembangan kapasitas manusia, penyuluhan, konseling adiksi,
+              pelatihan, pemberdayaan masyarakat, pengembangan program P4GN, penulisan,
+              serta pemanfaatan teknologi untuk edukasi dan pelayanan sosial.
+            </p>
+            <div class="tri-tags">
+              <span>Human Development</span>
+              <span>Training</span>
+              <span>Konseling Adiksi</span>
+              <span>Pengembangan Program</span>
+              <span>Penulisan Buku</span>
+            </div>
+            <a class="tri-profile-link"
+               href="tri-tjahyono-profile.png"
+               target="_blank"
+               rel="noopener">
+              Lihat Profil Lengkap →
+            </a>
+          </div>
+        </article>
+
       </div>
     </section>
 
@@ -170,7 +279,7 @@
       <div><a href="#beranda">Kembali ke atas ↑</a></div>
     </div>
   </footer>
-  <script src="assets/config.js?v=1.1"></script>
-  <script src="assets/app.js?v=1.1"></script>
+  <script src="assets/config.js?v=1.7"></script>
+  <script src="assets/app.js?v=1.7"></script>
 </body>
 </html>
