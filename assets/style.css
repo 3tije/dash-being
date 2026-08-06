@@ -11,3 +11,51 @@
 footer{border-top:1px solid var(--line);padding:24px 0}.footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center}.footer-grid img{width:150px}.footer-grid p{text-align:center;color:var(--muted);font-size:13px}.footer-grid div{text-align:right;font-weight:700;font-size:13px}
 @media(max-width:850px){.menu{display:block}.nav nav{display:none;position:absolute;top:78px;left:0;right:0;background:#fff;padding:20px 24px;flex-direction:column;align-items:flex-start;border-bottom:1px solid var(--line)}.nav nav.open{display:flex}.hero{padding-top:45px}.hero-grid,.split,.access-grid{grid-template-columns:1fr}.hero-card img{height:390px}.services{grid-template-columns:1fr 1fr}.values{grid-template-columns:1fr}.section-head{display:block}.team-gallery{grid-template-columns:1fr}.team-gallery img{height:auto}.cta-box{display:block;padding:34px}.cta-actions{margin-top:28px;flex-direction:row}.footer-grid{grid-template-columns:1fr;text-align:center;gap:14px}.footer-grid img{margin:auto}.footer-grid div{text-align:center}}
 @media(max-width:560px){.container{width:min(100% - 24px,1160px)}.hero h1{font-size:42px}.hero p{font-size:16px}.actions{flex-direction:column}.btn{width:100%}.services{grid-template-columns:1fr}.access-card{grid-template-columns:auto 1fr;padding:21px}.access-card>b{display:none}.section{padding:66px 0}.cta-actions{flex-direction:column}.hero-card img{height:310px}.brand img{width:160px}}
+
+
+/* Team cards — v1.4 */
+.team-gallery{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px;
+}
+.team-profile-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 12px 34px rgba(20,60,48,.08);
+}
+.team-profile-card>img,
+.team-profile-card>a>img{
+  width:100%;
+  height:430px;
+  object-fit:cover;
+  object-position:top;
+  border-radius:0;
+  border:0;
+}
+.team-profile-card.featured>a>img{
+  height:560px;
+  object-fit:cover;
+  object-position:top;
+}
+.team-card-copy{padding:22px 24px 25px}
+.team-card-copy small{
+  color:var(--green2);
+  font-weight:800;
+  letter-spacing:.12em;
+  font-size:11px;
+}
+.team-card-copy h3{font-size:24px;margin:8px 0 10px}
+.team-card-copy p{margin:0;color:var(--muted);line-height:1.65}
+.team-profile-link{
+  display:inline-flex;
+  margin-top:15px;
+  font-weight:800;
+  color:var(--green);
+}
+@media(max-width:850px){
+  .team-gallery{grid-template-columns:1fr}
+  .team-profile-card>img,.team-profile-card>a>img,.team-profile-card.featured>a>img{height:auto}
+}
