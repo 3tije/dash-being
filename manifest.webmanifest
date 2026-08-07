@@ -7,10 +7,10 @@
   "theme_color": "#164f43",
   "icons": [
     {
-      "src": "assets/being-logo.png",
+      "src": "assets/being-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     }
   ]
 }

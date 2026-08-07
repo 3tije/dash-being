@@ -8,128 +8,7 @@
   <title>BEING Biro Psikologi</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/being-logo.png">
-  <link rel="stylesheet" href="assets/style.css?v=3.0">
-
-  <style>
-    /* Team order & layout — index v3.0 */
-    #tim .team-gallery{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:24px;
-      align-items:stretch;
-    }
-
-    #tim .team-profile-card{
-      display:flex;
-      flex-direction:column;
-      overflow:hidden;
-      background:#fff;
-      border:1px solid var(--line,#d8dfdb);
-      border-radius:24px;
-      box-shadow:0 14px 38px rgba(20,60,48,.09);
-    }
-
-    #tim .team-profile-card>a{
-      display:block;
-      background:#f5f7f4;
-    }
-
-    #tim .team-profile-card img,
-    #tim .team-profile-card>a>img{
-      display:block;
-      width:100%;
-      height:auto;
-      border:0;
-      border-radius:0;
-      object-fit:contain;
-      object-position:center top;
-      background:#f5f7f4;
-    }
-
-    #tim .leadership-card{
-      grid-column:span 1;
-    }
-
-    #tim .leadership-card img,
-    #tim .leadership-card>a>img{
-      aspect-ratio:4/5;
-      object-fit:contain;
-    }
-
-    #tim .overview-card img{
-      aspect-ratio:805/1137;
-      object-fit:contain;
-    }
-
-    #tim .human-development-card{
-      grid-column:1 / -1;
-      display:grid;
-      grid-template-columns:minmax(300px,46%) 1fr;
-      align-items:center;
-    }
-
-    #tim .human-development-card>a{
-      height:100%;
-    }
-
-    #tim .human-development-card img{
-      height:100%;
-      min-height:520px;
-      object-fit:contain;
-    }
-
-    #tim .team-card-copy{
-      display:flex;
-      flex-direction:column;
-      flex:1;
-      padding:24px 26px 28px;
-    }
-
-    #tim .team-card-copy small{
-      color:var(--green2,#0d6c50);
-      font-size:11px;
-      font-weight:800;
-      letter-spacing:.13em;
-    }
-
-    #tim .team-card-copy h3{
-      margin:8px 0 11px;
-      font-size:clamp(23px,2.6vw,32px);
-      line-height:1.22;
-    }
-
-    #tim .team-card-copy p{
-      margin:0;
-      color:var(--muted,#65726e);
-      line-height:1.7;
-    }
-
-    #tim .team-profile-link{
-      display:inline-flex;
-      margin-top:auto;
-      padding-top:18px;
-      color:var(--green,#164f43);
-      font-weight:800;
-    }
-
-    @media(max-width:900px){
-      #tim .team-gallery{
-        grid-template-columns:1fr;
-      }
-
-      #tim .human-development-card{
-        grid-column:auto;
-        display:flex;
-        flex-direction:column;
-      }
-
-      #tim .human-development-card img{
-        min-height:0;
-        height:auto;
-      }
-    }
-  </style>
-
+  <link rel="stylesheet" href="assets/style.css?v=3.0.1">
 </head>
 <body>
   <header class="topbar">
@@ -233,138 +112,88 @@
     <section class="section" id="tim">
       <div class="container">
         <div class="section-head">
-          <div><span class="kicker">PENDUKUNG BEING</span><h2>Lintas profesi, satu komitmen.</h2></div>
-          <p>BEING didukung oleh psikolog, psikiater, dokter, konselor adiksi, praktisi rehabilitasi, profesional human resources, sosiolog, trainer, penulis, dan pengembang program human development.</p>
+          <div><span class="kicker">TIM PROFESIONAL BEING</span><h2>Keahlian yang beragam, pola layanan yang sama profesional.</h2></div>
+          <p>Tim BEING hadir dengan latar belakang psikologi, kesehatan, adiksi, dan human development. Setiap profil ditampilkan dalam pola yang konsisten agar struktur tim lebih jelas dan profesional.</p>
         </div>
-        <div class="team-gallery">
-          <!-- 1. Founder -->
-          <article class="team-profile-card leadership-card">
-            <a href="assets/muhammad-fierza-founder.png" target="_blank" rel="noopener">
-              <img src="assets/muhammad-fierza-founder.png?v=3"
-                   alt="Muhammad Fierza, Founder BEING">
-            </a>
-            <div class="team-card-copy">
-              <small>FOUNDER</small>
-              <h3>Muhammad Fierza, M.Nst., M.Si., Psi.</h3>
-              <p>Psikolog, hipnoterapis, asesor kompetensi konselor adiksi, dan pengembang program Human Development.</p>
-              <a class="team-profile-link"
-                 href="assets/muhammad-fierza-founder.png"
-                 target="_blank"
-                 rel="noopener">
-                Lihat profil lengkap →
-              </a>
-            </div>
-          </article>
 
-          <!-- 2. Managing Director -->
-          <article class="team-profile-card leadership-card">
-            <a href="assets/vicka-dian-managing-director.png" target="_blank" rel="noopener">
-              <img src="assets/vicka-dian-managing-director.png?v=3"
-                   alt="Vicka Dian Permata, Managing Director BEING">
-            </a>
-            <div class="team-card-copy">
-              <small>MANAGING DIRECTOR</small>
-              <h3>Vicka Dian Permata, S.Psi.</h3>
-              <p>Human Resources Professional yang berpengalaman dalam pengembangan organisasi, rekrutmen, asesmen, serta people development.</p>
-              <a class="team-profile-link"
-                 href="assets/vicka-dian-managing-director.png"
-                 target="_blank"
-                 rel="noopener">
-                Lihat profil lengkap →
-              </a>
-            </div>
-          </article>
+        <div class="team-role-block">
+          <div class="team-role-head"><span>01</span><div><small>KEPEMIMPINAN</small><h3>Founder</h3></div></div>
+          <div class="team-gallery team-gallery-lead">
+            <article class="team-profile-card person-card">
+              <a href="assets/muhammad-fierza-founder.jpg" target="_blank" rel="noopener"><img src="assets/muhammad-fierza-founder.jpg" alt="Muhammad Fierza, Founder BEING"></a>
+              <div class="team-card-copy"><small>FOUNDER</small><h3>Muhammad Fierza, M.Nst., M.Si., Psi.</h3><p>Psikolog, konselor, trainer, asesor kompetensi, dan pengembang program Human Development.</p><a class="team-profile-link" href="assets/muhammad-fierza-founder.jpg" target="_blank" rel="noopener">Lihat profil →</a></div>
+            </article>
+          </div>
+        </div>
 
-          <!-- 3. Pembina dan manajemen -->
-          <article class="team-profile-card overview-card">
-            <a href="assets/team2.jpg" target="_blank" rel="noopener">
-              <img src="assets/team2.jpg"
-                   alt="Susunan pendukung, pembina, founder, dan manajemen BEING">
-            </a>
-            <div class="team-card-copy">
-              <small>PEMBINA & MANAJEMEN</small>
-              <h3>Susunan Pendukung BEING</h3>
-              <p>Pembina dan jajaran pendukung yang memperkuat arah, nilai, serta pengembangan organisasi BEING.</p>
-              <a class="team-profile-link"
-                 href="assets/team2.jpg"
-                 target="_blank"
-                 rel="noopener">
-                Lihat gambar lengkap →
-              </a>
-            </div>
-          </article>
+        <div class="team-role-block">
+          <div class="team-role-head"><span>02</span><div><small>KEPEMIMPINAN</small><h3>Managing Director</h3></div></div>
+          <div class="team-gallery team-gallery-lead">
+            <article class="team-profile-card person-card">
+              <a href="assets/vicka-dian-managing-director.jpg" target="_blank" rel="noopener"><img src="assets/vicka-dian-managing-director.jpg" alt="Vicka Dian Permata, Managing Director BEING"></a>
+              <div class="team-card-copy"><small>MANAGING DIRECTOR</small><h3>Vicka Dian Permata, S.Psi.</h3><p>Profesional Human Resources yang berpengalaman dalam pengembangan layanan dan program strategis.</p><a class="team-profile-link" href="assets/vicka-dian-managing-director.jpg" target="_blank" rel="noopener">Lihat profil →</a></div>
+            </article>
+          </div>
+        </div>
 
-          <!-- 4. Psikolog dan pakar -->
-          <article class="team-profile-card overview-card">
-            <a href="assets/experts.jpg" target="_blank" rel="noopener">
-              <img src="assets/experts.jpg"
-                   alt="Psikolog dan pakar psikologi BEING">
-            </a>
-            <div class="team-card-copy">
-              <small>TIM PROFESIONAL</small>
-              <h3>Psikolog & Pakar</h3>
-              <p>Tenaga profesional dengan pengalaman layanan psikologi, asesmen, konseling, dan pengembangan manusia.</p>
-              <a class="team-profile-link"
-                 href="assets/experts.jpg"
-                 target="_blank"
-                 rel="noopener">
-                Lihat gambar lengkap →
-              </a>
-            </div>
-          </article>
+        <div class="team-role-block">
+          <div class="team-role-head"><span>03</span><div><small>PENGARAH & PEMBINA</small><h3>Pembina</h3></div></div>
+          <div class="team-gallery">
+            <article class="team-profile-card profile-poster-card">
+              <a href="assets/team/pembina-anjan.jpg" target="_blank" rel="noopener"><img src="assets/team/pembina-anjan.jpg" alt="Irjen. Pol. (Purn.) Drs. Anjan Pramuka Putra, S.H., M.Hum., Pembina BEING"></a>
+              <div class="team-card-copy"><small>PEMBINA</small><h3>Irjen. Pol. (Purn.) Drs. Anjan Pramuka Putra, S.H., M.Hum.</h3><p>Purnawirawan Perwira Tinggi Polri dengan pengalaman strategis pada bidang pencegahan dan pemberantasan narkotika serta edukasi masyarakat.</p><a class="team-profile-link" href="assets/team/pembina-anjan.jpg" target="_blank" rel="noopener">Lihat profil lengkap →</a></div>
+            </article>
+            <article class="team-profile-card profile-poster-card">
+              <a href="assets/team/pembina-diah.jpg" target="_blank" rel="noopener"><img src="assets/team/pembina-diah.jpg" alt="Dr. dr. Diah Setia Utami, Sp.KJ, MARS, Pembina BEING"></a>
+              <div class="team-card-copy"><small>PEMBINA</small><h3>Dr. dr. Diah Setia Utami, Sp.KJ, MARS</h3><p>Psikiater dan pakar adiksi serta rehabilitasi dengan pengalaman kepemimpinan, pengembangan kebijakan, dan layanan kesehatan jiwa.</p><a class="team-profile-link" href="assets/team/pembina-diah.jpg" target="_blank" rel="noopener">Lihat profil lengkap →</a></div>
+            </article>
+          </div>
+        </div>
 
-          <!-- 5. Tim kesehatan dan adiksi -->
-          <article class="team-profile-card overview-card">
-            <a href="assets/health-team.jpg" target="_blank" rel="noopener">
-              <img src="assets/health-team.jpg"
-                   alt="Psikiater, dokter, dan ahli kesehatan-adiksi BEING">
-            </a>
-            <div class="team-card-copy">
-              <small>KESEHATAN & ADIKSI</small>
-              <h3>Psikiater, Dokter & Ahli</h3>
-              <p>Tim kesehatan mental, adiksi, rehabilitasi, serta edukasi yang bekerja berdasarkan ilmu dan etika profesi.</p>
-              <a class="team-profile-link"
-                 href="assets/health-team.jpg"
-                 target="_blank"
-                 rel="noopener">
-                Lihat gambar lengkap →
-              </a>
-            </div>
-          </article>
+        <div class="team-role-block">
+          <div class="team-role-head"><span>04</span><div><small>LAYANAN PSIKOLOGI</small><h3>Associate Psychologist</h3></div></div>
+          <div class="team-gallery">
+            <article class="team-profile-card profile-poster-card"><a href="assets/team/psikolog-1.jpg" target="_blank" rel="noopener"><img src="assets/team/psikolog-1.jpg" alt="Associate Psychologist BEING"></a><div class="team-card-copy"><small>ASSOCIATE PSYCHOLOGIST</small><h3>Psikolog BEING</h3><p>Profesional psikologi dengan pengalaman pada asesmen, konseling, pengembangan, dan layanan psikologis.</p><a class="team-profile-link" href="assets/team/psikolog-1.jpg" target="_blank" rel="noopener">Lihat profil lengkap →</a></div></article>
+            <article class="team-profile-card profile-poster-card"><a href="assets/team/psikolog-2.jpg" target="_blank" rel="noopener"><img src="assets/team/psikolog-2.jpg" alt="Associate Psychologist dan pakar psikologi BEING"></a><div class="team-card-copy"><small>ASSOCIATE PSYCHOLOGIST</small><h3>Psikolog & Pakar BEING</h3><p>Tenaga profesional psikologi yang mendukung layanan individu, kelompok, organisasi, serta pengembangan manusia.</p><a class="team-profile-link" href="assets/team/psikolog-2.jpg" target="_blank" rel="noopener">Lihat profil lengkap →</a></div></article>
+          </div>
+        </div>
 
-          <!-- 6. Human Development -->
-          <article class="team-profile-card human-development-card">
-            <a href="assets/tri-tjahyono-profile.png" target="_blank" rel="noopener">
-              <img src="assets/tri-tjahyono-profile.png?v=3"
-                   alt="Tri Tjahyono, Human Development BEING">
-            </a>
-            <div class="team-card-copy">
-              <small>HUMAN DEVELOPMENT</small>
-              <h3>Tri Tjahyono, S.Sos., M.Si.</h3>
-              <p>Sosiolog, Penyuluh Narkoba, Konselor Adiksi, Trainer, Penulis Buku, dan Pengembang Program P4GN yang berfokus pada pengembangan kapasitas manusia dan pemberdayaan masyarakat.</p>
-              <a class="team-profile-link"
-                 href="assets/tri-tjahyono-profile.png"
-                 target="_blank"
-                 rel="noopener">
-                Lihat profil lengkap →
-              </a>
-            </div>
-          </article>
+        <div class="team-role-block">
+          <div class="team-role-head"><span>05</span><div><small>KESEHATAN & ADIKSI</small><h3>Dokter – Adiksi</h3></div></div>
+          <div class="team-gallery">
+            <article class="team-profile-card profile-poster-card"><a href="assets/team/dokter-adiksi.jpg" target="_blank" rel="noopener"><img src="assets/team/dokter-adiksi.jpg" alt="Psikiater, dokter, dan ahli kesehatan-adiksi BEING"></a><div class="team-card-copy"><small>DOKTER – ADIKSI</small><h3>Tim Kesehatan & Adiksi</h3><p>Psikiater, dokter, dan ahli kesehatan yang mendukung kebutuhan kesehatan mental, adiksi, rehabilitasi, dan edukasi.</p><a class="team-profile-link" href="assets/team/dokter-adiksi.jpg" target="_blank" rel="noopener">Lihat profil lengkap →</a></div></article>
+          </div>
+        </div>
+
+        <div class="team-role-block">
+          <div class="team-role-head"><span>06</span><div><small>PENGEMBANGAN MANUSIA</small><h3>Human Development</h3></div></div>
+          <div class="team-gallery team-gallery-lead">
+            <article class="team-profile-card profile-poster-card"><a href="assets/team/tri-tjahyono-profile2.jpg" target="_blank" rel="noopener"><img src="assets/team/tri-tjahyono-profile2.jpg" alt="Tri Tjahyono, Human Development BEING"></a><div class="team-card-copy"><small>HUMAN DEVELOPMENT</small><h3>Tri Tjahyono, S.Sos., M.Si.</h3><p>Sosiolog, konselor adiksi, trainer, penulis, dan pengembang program human development.</p><a class="team-profile-link" href="assets/team/tri-tjahyono-profile2.jpg" target="_blank" rel="noopener">Lihat profil lengkap →</a></div></article>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section clients" id="klien">
       <div class="container">
-        <span class="kicker">KLIEN KAMI</span>
-        <h2>Pengalaman melayani beragam organisasi.</h2>
-        <div class="client-list">
-          <span>Deloitte</span><span>Sanyo</span><span>Ganeca Exact</span><span>KFC</span><span>BPOM</span>
-          <span>RS Islam Jakarta</span><span>OPI</span><span>Indofarma</span><span>PHEI</span><span>PT Hasan Esia</span>
+        <div class="section-head client-section-head"><div><span class="kicker">KLIEN BEING</span><h2>Dipercaya oleh beragam organisasi.</h2></div><p>Pengalaman BEING mencakup layanan kepada organisasi dari berbagai sektor. Logo ditampilkan secara proporsional agar identitas setiap klien tetap terjaga.</p></div>
+        <div class="client-logo-grid">
+          <article class="client-logo-card"><img src="assets/clients/deloitte.jpg" alt="Logo Deloitte" loading="lazy"><span>Deloitte</span></article>
+          <article class="client-logo-card"><img src="assets/clients/sanyo.jpg" alt="Logo Sanyo" loading="lazy"><span>Sanyo</span></article>
+          <article class="client-logo-card"><img src="assets/clients/ganeca.jpg" alt="Logo Ganeca" loading="lazy"><span>Ganeca</span></article>
+          <article class="client-logo-card"><img src="assets/clients/kfc.jpg" alt="Logo KFC" loading="lazy"><span>KFC</span></article>
+          <article class="client-logo-card"><img src="assets/clients/bpom.jpg" alt="Logo BPOM" loading="lazy"><span>BPOM</span></article>
+          <article class="client-logo-card"><img src="assets/clients/RSI.jpg" alt="Logo RS Islam Jakarta" loading="lazy"><span>RS Islam Jakarta</span></article>
+          <article class="client-logo-card"><img src="assets/clients/OPI.jpg" alt="Logo OPI" loading="lazy"><span>OPI</span></article>
+          <article class="client-logo-card"><img src="assets/clients/indofarma.jpg" alt="Logo Indofarma" loading="lazy"><span>Indofarma</span></article>
+          <article class="client-logo-card"><img src="assets/clients/phei.jpg" alt="Logo PHEI" loading="lazy"><span>PHEI</span></article>
+          <article class="client-logo-card"><img src="assets/clients/hasanesa.jpg" alt="Logo Hasanesa" loading="lazy"><span>Hasanesa</span></article>
+          <article class="client-logo-card"><img src="assets/clients/askes.jpg" alt="Logo Askes" loading="lazy"><span>Askes</span></article>
+          <article class="client-logo-card"><img src="assets/clients/fokus.jpg" alt="Logo Fokus" loading="lazy"><span>Fokus</span></article>
+          <article class="client-logo-card"><img src="assets/clients/steami.jpg" alt="Logo STEAMI" loading="lazy"><span>STEAMI</span></article>
         </div>
       </div>
     </section>
-
 
     <section class="section muted" id="suara-anda">
       <div class="container split">
@@ -387,8 +216,8 @@
           <p>Jl. Sinabung Raya No. 6B, Kebayoran Baru, Jakarta Selatan 12120</p>
         </div>
         <div class="cta-actions">
-          <a class="btn white" href="https://wa.me/6287775087431" target="_blank" rel="noopener">WA Admin</a>
-          <a class="btn ghost" href="mailto:being_sinabung@yahoo.com">Email BEING</a>
+          <a class="btn white" href="https://wa.me/6287775087431" target="_blank" rel="noopener">Hub Admin</a>
+          <a class="btn ghost" href="mailto:info@beingpsikologi.com">Email BEING</a>
         </div>
       </div>
     </section>
@@ -398,21 +227,30 @@
     <div class="container footer-grid">
       <img src="assets/being-logo.png" alt="BEING Biro Psikologi">
       <p>© 2026 BEING Biro Psikologi. Konseling untuk semua.</p>
-      <div><a href="#beranda">Kembali ke atas ↑</a></div>
+      <div class="footer-links" aria-label="Media sosial dan navigasi footer">
+        <a class="social-icon instagram" href="https://www.instagram.com/wearebeing.id/" target="_blank" rel="noopener" aria-label="Instagram @wearebeing.id" title="Instagram @wearebeing.id">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm10.5 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>
+        </a>
+        <a class="social-icon facebook" href="https://www.facebook.com/search/top?q=being%20biro%20psikologi" target="_blank" rel="noopener" aria-label="Facebook Being Biro Psikologi" title="Facebook Being Biro Psikologi">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.8 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.3-1.6 1.6-1.6H17V4.5c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.2H7.5V14h2.8v8h3.5Z"/></svg>
+        </a>
+        <a class="back-top" href="#beranda" aria-label="Kembali ke atas">Kembali ke atas ↑</a>
+      </div>
     </div>
   </footer>
   <script src="assets/config.js?v=3.0"></script>
-  <script src="assets/app.js?v=3.0"></script>
+  <script src="assets/app.js?v=3.0.1"></script>
 
   <a class="floating-wa"
      href="https://wa.me/6287775087431"
      target="_blank"
      rel="noopener"
-     aria-label="Hubungi WA Admin BEING"
-     title="WA Admin">
+     aria-label="Hubungi Admin BEING melalui WhatsApp"
+     title="Hub Admin">
     <span class="floating-wa-icon">✆</span>
-    <span class="floating-wa-text">WA Admin</span>
+    <span class="floating-wa-text">Hub Admin</span>
   </a>
 
+  <script src="assets/admin-whatsapp.js?v=3.0.1-final"></script>
 </body>
 </html>
