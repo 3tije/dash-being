@@ -7,7 +7,7 @@
  function showPanel(name){
    $$(".admin-panel").forEach(x=>x.classList.toggle("active",x.id==="panel-"+name));
    $$(".admin-menu [data-panel]").forEach(x=>x.classList.toggle("active",x.dataset.panel===name));
-   const map={overview:"Ringkasan",surveys:"Kelola Survei",builder:"Pertanyaan",results:"Hasil & Grafik"};
+   const map={overview:"Ringkasan",surveys:"Kelola formulir",builder:"Pertanyaan",results:"Hasil & Grafik"};
    $("#panelTitle").textContent=map[name]||"BEING Voice";
    if(name==="results")loadResults();
  }
@@ -29,8 +29,8 @@
  }
  function renderOverview(){
    const active=surveys.filter(s=>s.status==="active").length, responses=surveys.reduce((a,s)=>a+Number(s.responseCount||0),0);
-   $("#statsGrid").innerHTML=`<div class="stat-card"><b>${surveys.length}</b><span>Total survei</span></div><div class="stat-card"><b>${active}</b><span>Aktif</span></div><div class="stat-card"><b>${responses}</b><span>Total respons</span></div>`;
-   $("#recentSurveys").innerHTML=surveys.slice(0,5).map(s=>`<div class="result-row"><b>${esc(s.title)}</b><span>${esc(s.status)} · ${s.responseCount||0} respons</span></div>`).join("")||"Belum ada survei.";
+   $("#statsGrid").innerHTML=`<div class="stat-card"><b>${surveys.length}</b><span>Total formulir</span></div><div class="stat-card"><b>${active}</b><span>Aktif</span></div><div class="stat-card"><b>${responses}</b><span>Total respons</span></div>`;
+   $("#recentSurveys").innerHTML=surveys.slice(0,5).map(s=>`<div class="result-row"><b>${esc(s.title)}</b><span>${esc(s.status)} · ${s.responseCount||0} respons</span></div>`).join("")||"Belum ada formulir.";
  }
  function renderSurveys(){
    $("#surveyTable").innerHTML=surveys.map(s=>`<tr><td>${esc(s.title)}</td><td>${esc(s.category||"-")}</td><td>${esc(s.status)}</td><td>${s.questionCount||0}</td><td>${s.responseCount||0}</td><td><button class="voice-btn primary small" data-share-survey="${s.id}">Bagikan</button> <button class="voice-btn secondary small" data-edit-survey="${s.id}">Edit</button> <button class="voice-btn secondary small" data-del-survey="${s.id}">Hapus</button></td></tr>`).join("");
@@ -41,7 +41,7 @@
    if(surveys.length)loadQuestions();
  }
  function openEditor(s){
-   $("#surveyEditor").classList.add("open"); $("#editorTitle").textContent=s?"Edit Survei":"Buat Survei";
+   $("#surveyEditor").classList.add("open"); $("#editorTitle").textContent=s?"Edit formulir":"Buat formulir";
    $("#editSurveyId").value=s?.id||"";$("#editTitle").value=s?.title||"";$("#editDescription").value=s?.description||"";$("#editCategory").value=s?.category||"";
    $("#editAccessMode").value=s?.accessMode||"public";$("#editAccessCode").value=s?.accessCode||"";$("#editIdentity").value=s?.identityMode||"anonymous";$("#editStatus").value=s?.status||"draft";$("#editEndDate").value=s?.endDate||"";
    accessMode();
@@ -109,7 +109,7 @@
    const mode=s.accessMode||"public";
    if(mode==="link" && s.shareKey) u.searchParams.set("key",s.shareKey);
 
-   let text=`${s.title}\n\nSilakan isi survei BEING melalui link berikut:\n${u.toString()}`;
+   let text=`${s.title}\n\nSilakan isi formulir BEING melalui link berikut:\n${u.toString()}`;
    if(mode==="code" && s.accessCode){
      text+=`\n\nKode akses: ${s.accessCode}`;
    }
@@ -128,9 +128,9 @@
    }
    try{
      await navigator.clipboard.writeText(d.text);
-     alert("Link survei sudah disalin. Silakan tempel ke WhatsApp, email, atau media lainnya.");
+     alert("Link formulir sudah disalin. Silakan tempel ke WhatsApp, email, atau media lainnya.");
    }catch(err){
-     prompt("Salin link survei berikut:",d.text);
+     prompt("Salin link formulir berikut:",d.text);
    }
  }
  document.addEventListener("click",async e=>{
@@ -140,7 +140,7 @@
      if(s)await shareSurvey(s);
    }
    if(e.target.matches("[data-edit-survey]"))openEditor(surveys.find(s=>s.id===e.target.dataset.editSurvey));
-   if(e.target.matches("[data-del-survey]")&&confirm("Hapus survei dan seluruh responsnya?")){await api("admin.deleteSurvey",{surveyId:e.target.dataset.delSurvey});await refresh()}
+   if(e.target.matches("[data-del-survey]")&&confirm("Hapus formulir dan seluruh responsnya?")){await api("admin.deleteSurvey",{surveyId:e.target.dataset.delSurvey});await refresh()}
    if(e.target.matches("[data-edit-q]")){
      const q=questions.find(x=>x.id===e.target.dataset.editQ);if(!q)return;
      $("#questionId").value=q.id;$("#questionText").value=q.text;$("#questionType").value=q.type;$("#questionRequired").checked=!!q.required;
