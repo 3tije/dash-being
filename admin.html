@@ -2,7 +2,7 @@
 <html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#164f43"><title>Admin BEING Voice</title>
-<link rel="stylesheet" href="assets/style.css?v=3.0"><link rel="stylesheet" href="assets/voice.css?v=2.0">
+<link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/voice.css">
 </head><body class="voice-page">
 <div id="loginView" class="admin-login">
   <form id="loginForm" class="login-card">
@@ -59,10 +59,28 @@
               <select id="questionType" class="form-control">
                 <option value="radio">Pilihan tunggal</option><option value="checkbox">Pilihan lebih dari satu</option>
                 <option value="scale5">Skala 1–5</option><option value="scale10">Skala 1–10</option>
-                <option value="yesno">Ya / Tidak</option><option value="text">Jawaban singkat</option><option value="textarea">Jawaban panjang</option>
+                <option value="yesno">Ya / Tidak</option><option value="text">Jawaban singkat</option><option value="textarea">Jawaban panjang</option><option value="file">Upload berkas</option>
               </select>
             </div>
             <div class="form-field" id="optionsWrap"><label>Pilihan jawaban</label><textarea id="questionOptions" class="form-control" placeholder="Satu pilihan per baris"></textarea></div>
+            <div id="fileSettingsWrap" hidden>
+              <div class="form-field"><label>Jenis berkas yang diizinkan</label>
+                <select id="fileAccept" class="form-control">
+                  <option value=".pdf,.jpg,.jpeg,.png,.doc,.docx">PDF, JPG/PNG, DOC/DOCX</option>
+                  <option value=".pdf">PDF saja</option>
+                  <option value=".jpg,.jpeg,.png">Gambar JPG/PNG</option>
+                  <option value=".doc,.docx">Word DOC/DOCX</option>
+                </select>
+              </div>
+              <div class="form-field"><label>Ukuran maksimum</label>
+                <select id="fileMaxMb" class="form-control">
+                  <option value="5">5 MB</option>
+                  <option value="10">10 MB</option>
+                  <option value="15">15 MB</option>
+                </select>
+              </div>
+              <small>Berkas responden akan disimpan ke Google Drive BEING dan link-nya tercatat pada hasil form.</small>
+            </div>
             <label class="option"><input id="questionRequired" type="checkbox"><span>Wajib dijawab</span></label>
             <button class="voice-btn primary" style="width:100%;margin-top:16px" type="submit">Simpan Pertanyaan</button>
           </form>
@@ -112,17 +130,5 @@
   </div>
 </div>
 
-<script src="assets/config.js?v=2.0"></script><script src="assets/voice-api.js?v=2.0"></script><script src="assets/voice-admin.js?v=2.0"></script>
-
-  <a class="floating-wa"
-     href="https://wa.me/6287775087431"
-     target="_blank"
-     rel="noopener"
-     aria-label="Hubungi Hub Admin BEING"
-     title="Hub Admin">
-    <span class="floating-wa-icon">✆</span>
-    <span class="floating-wa-text">Hub Admin</span>
-  </a>
-
-  <script src="assets/admin-whatsapp.js?v=3.0-final"></script>
+<script src="assets/config.js?v=1.3"></script><script src="assets/voice-api.js?v=1.3"></script><script src="assets/voice-admin.js?v=1.3"></script>
 </body></html>
