@@ -1,26 +1,16 @@
-window.BeingAPI = (() => {
-  const cfg = window.BEING_CONFIG || {};
-  const base = () => (cfg.API_URL || "").trim();
-
-  function configured(){
-    return base() && !base().includes("PASTE_APPS_SCRIPT");
-  }
-
-  async function request(action, payload = {}, token = ""){
-    if(!configured()) throw new Error("API Apps Script belum dikonfigurasi pada assets/config.js");
-    const body = { action, payload, token };
-    const res = await fetch(base(), {
+(function(){
+  const cfg=window.BEING_CONFIG||window.CONFIG||{};
+  const API_URL=cfg.VOICE_API_URL||cfg.API_URL||cfg.VOICE_URL||window.VOICE_API_URL||"";
+  async function call(action,payload,token){
+    if(!API_URL) throw new Error("VOICE_API_URL belum diatur di assets/config.js");
+    const r=await fetch(API_URL,{
       method:"POST",
-      redirect:"follow",
       headers:{"Content-Type":"text/plain;charset=utf-8"},
-      body:JSON.stringify(body)
+      body:JSON.stringify({action:action,payload:payload||{},token:token||""})
     });
-    const text = await res.text();
-    let data;
-    try { data = JSON.parse(text); } catch(e) { throw new Error("Respons server tidak valid."); }
-    if(!data.ok) throw new Error(data.message || "Permintaan gagal.");
-    return data.data;
+    const j=await r.json();
+    if(!j.ok) throw new Error(j.message||"Permintaan gagal.");
+    return j.data;
   }
-
-  return {request, configured};
+  window.BVAPI={call};
 })();

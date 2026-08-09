@@ -1,138 +1,124 @@
-const A=s=>document.querySelector(s);
-let token=sessionStorage.getItem("beingAdminToken")||"",surveys=[],currentQuestions=[],currentResponses=[];
-const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-const api=(action,payload={})=>BeingAPI.request(action,payload,token);
+(function(){
+ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+ let token=sessionStorage.getItem("bv_token")||"", surveys=[], questions=[];
+ const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+ const api=(a,p={})=>BVAPI.call(a,p,token);
 
-function setView(loggedIn){
- A("#loginView").hidden=loggedIn;
- A("#adminView").hidden=!loggedIn;
- document.body.scrollTop=0;document.documentElement.scrollTop=0;
-}
-setView(false);
-
-A("#loginForm").onsubmit=async e=>{
- e.preventDefault();A("#loginNotice").innerHTML="";
- try{
-  const data=await BeingAPI.request("admin.login",{pin:A("#adminPin").value});
-  token=data.token;sessionStorage.setItem("beingAdminToken",token);setView(true);await refreshAll();
- }catch(err){A("#loginNotice").innerHTML=`<div class="notice error">${esc(err.message)}</div>`}
-};
-A("#logoutBtn").onclick=()=>{sessionStorage.removeItem("beingAdminToken");token="";setView(false);A("#adminPin").value=""};
-
-document.querySelectorAll("[data-panel]").forEach(btn=>btn.onclick=()=>{
- document.querySelectorAll("[data-panel]").forEach(b=>b.classList.remove("active"));btn.classList.add("active");
- document.querySelectorAll(".admin-panel").forEach(p=>p.classList.remove("active"));
- A("#panel-"+btn.dataset.panel).classList.add("active");A("#panelTitle").textContent=btn.textContent;
-});
-
-async function refreshAll(){surveys=await api("admin.listSurveys");renderOverview();renderSurveyTable();fillSurveySelects()}
-function renderOverview(){
- const total=surveys.length,active=surveys.filter(x=>x.status==="active").length,responses=surveys.reduce((n,x)=>n+Number(x.responseCount||0),0),questions=surveys.reduce((n,x)=>n+Number(x.questionCount||0),0);
- A("#statsGrid").innerHTML=[["Total Survei",total],["Aktif",active],["Pertanyaan",questions],["Total Respon",responses]].map(x=>`<article class="stat-card"><small>${x[0]}</small><strong>${x[1]}</strong></article>`).join("");
- A("#recentSurveys").innerHTML=surveys.slice(0,5).map(s=>`<div class="question-item"><b>${esc(s.title)}</b><small>${esc(s.category||"-")} • ${s.responseCount||0} respon • ${labelAccess(s.accessMode)}</small></div>`).join("")||'<div class="empty-state">Belum ada survei.</div>';
-}
-function chip(status){return `<span class="status-chip ${status}">${status==="active"?"AKTIF":status==="draft"?"DRAF":"DITUTUP"}</span>`}
-function labelAccess(m){return m==="link"?"Link Khusus":m==="code"?"Kode Akses":"Publik"}
-function renderSurveyTable(){
- A("#surveyTable").innerHTML=surveys.map(s=>`<tr>
- <td><b>${esc(s.title)}</b><br><small>${esc(s.description||"")}</small></td>
- <td>${esc(s.category||"-")}<br><small>${labelAccess(s.accessMode)}</small></td><td>${chip(s.status)}</td>
- <td>${s.questionCount||0}</td><td>${s.responseCount||0}</td>
- <td><div class="inline-actions">
- <button class="voice-btn secondary small" onclick="editSurvey('${s.id}')">Edit</button>
- <button class="voice-btn secondary small" onclick="manageQuestions('${s.id}')">Pertanyaan</button>
- <button class="voice-btn primary small" onclick="shareSurvey('${s.id}')">WhatsApp</button>
- <button class="voice-btn secondary small" onclick="copySurveyLink('${s.id}')">Salin Link</button>
- <button class="voice-btn danger small" onclick="deleteSurvey('${s.id}')">Hapus</button>
- </div></td></tr>`).join("");
-}
-function fillSurveySelects(){
- const opts=surveys.map(s=>`<option value="${s.id}">${esc(s.title)}</option>`).join("");
- A("#builderSurvey").innerHTML=opts;A("#resultSurvey").innerHTML=opts;
- if(surveys.length){loadQuestions(A("#builderSurvey").value);loadResults(A("#resultSurvey").value)}
- else{A("#questionList").innerHTML='<div class="empty-state">Buat survei terlebih dahulu.</div>';A("#resultSummary").innerHTML='<div class="empty-state">Belum ada hasil.</div>'}
-}
-function openEditor(s=null){
- A("#surveyEditor").classList.add("open");A("#editorTitle").textContent=s?"Edit Survei":"Buat Survei";
- A("#editSurveyId").value=s?.id||"";A("#editTitle").value=s?.title||"";A("#editDescription").value=s?.description||"";
- A("#editCategory").value=s?.category||"";A("#editIdentity").value=s?.identityMode||"anonymous";
- A("#editStatus").value=s?.status||"draft";A("#editEndDate").value=s?.endDate||"";
- A("#editAccessMode").value=s?.accessMode||"public";A("#editAccessCode").value=s?.accessCode||"";
- toggleCodeField();
-}
-function closeEditor(){A("#surveyEditor").classList.remove("open")}
-A("#newSurveyBtn").onclick=()=>openEditor();A("#newSurveyBtn2").onclick=()=>openEditor();A("#closeEditor").onclick=closeEditor;A("#cancelEditor").onclick=closeEditor;
-A("#editAccessMode").onchange=toggleCodeField;
-function toggleCodeField(){A("#accessCodeWrap").style.display=A("#editAccessMode").value==="code"?"block":"none"}
-A("#generateCodeBtn").onclick=()=>A("#editAccessCode").value="BEING"+Math.floor(1000+Math.random()*9000);
-window.editSurvey=id=>openEditor(surveys.find(x=>x.id===id));
-A("#surveyEditorForm").onsubmit=async e=>{
- e.preventDefault();
- const payload={id:A("#editSurveyId").value,title:A("#editTitle").value,description:A("#editDescription").value,category:A("#editCategory").value,identityMode:A("#editIdentity").value,status:A("#editStatus").value,endDate:A("#editEndDate").value,accessMode:A("#editAccessMode").value,accessCode:A("#editAccessCode").value};
- try{await api("admin.saveSurvey",payload);closeEditor();await refreshAll()}catch(err){alert(err.message)}
-};
-window.deleteSurvey=async id=>{if(confirm("Hapus survei beserta seluruh pertanyaan dan responsnya?")){await api("admin.deleteSurvey",{surveyId:id});await refreshAll()}};
-window.manageQuestions=id=>{document.querySelector('[data-panel="builder"]').click();A("#builderSurvey").value=id;loadQuestions(id)};
-
-function shareUrl(s){
- const base=new URL("suara-anda.html",location.href);
- base.searchParams.set("s",s.id);
- if(s.accessMode==="link")base.searchParams.set("k",s.shareKey);
- return base.toString();
-}
-window.copySurveyLink=async id=>{
- const s=surveys.find(x=>x.id===id),url=shareUrl(s);
- await navigator.clipboard.writeText(url);alert("Link survei telah disalin.");
-};
-window.shareSurvey=id=>{
- const s=surveys.find(x=>x.id===id),url=shareUrl(s);
- let text=`*BEING Voice*\n\n${s.title}\n${s.description||""}\n\nSilakan isi melalui:\n${url}`;
- if(s.accessMode==="code")text+=`\n\nKode akses: *${s.accessCode}*`;
- text+=`\n\nTerima kasih telah menyampaikan suara Anda.`;
- window.open("https://wa.me/?text="+encodeURIComponent(text),"_blank","noopener");
-};
-
-A("#builderSurvey").onchange=e=>loadQuestions(e.target.value);
-async function loadQuestions(surveyId){
- if(!surveyId)return;currentQuestions=await api("admin.listQuestions",{surveyId});
- A("#questionCount").textContent=`${currentQuestions.length} pertanyaan`;
- A("#questionList").innerHTML=currentQuestions.map((q,i)=>`<div class="question-item"><b>${i+1}. ${esc(q.text)}</b><small>${esc(q.type)} • ${q.required?"wajib":"opsional"}</small><div class="inline-actions" style="margin-top:10px"><button class="voice-btn secondary small" onclick="editQuestion('${q.id}')">Edit</button><button class="voice-btn danger small" onclick="deleteQuestion('${q.id}')">Hapus</button></div></div>`).join("")||'<div class="empty-state">Belum ada pertanyaan.</div>';
-}
-A("#questionType").onchange=()=>A("#optionsWrap").style.display=["radio","checkbox"].includes(A("#questionType").value)?"block":"none";
-A("#questionForm").onsubmit=async e=>{
- e.preventDefault();const surveyId=A("#builderSurvey").value;if(!surveyId)return alert("Pilih survei.");
- const payload={id:A("#questionId").value,surveyId,text:A("#questionText").value,type:A("#questionType").value,required:A("#questionRequired").checked,options:A("#questionOptions").value.split("\n").map(x=>x.trim()).filter(Boolean)};
- try{await api("admin.saveQuestion",payload);e.target.reset();A("#questionId").value="";A("#questionType").dispatchEvent(new Event("change"));await loadQuestions(surveyId);await refreshAll()}catch(err){alert(err.message)}
-};
-window.editQuestion=id=>{const q=currentQuestions.find(x=>x.id===id);A("#questionId").value=q.id;A("#questionText").value=q.text;A("#questionType").value=q.type;A("#questionRequired").checked=q.required;A("#questionOptions").value=(q.options||[]).join("\n");A("#questionType").dispatchEvent(new Event("change"));scrollTo({top:0,behavior:"smooth"})};
-window.deleteQuestion=async id=>{if(confirm("Hapus pertanyaan ini?")){await api("admin.deleteQuestion",{questionId:id});await loadQuestions(A("#builderSurvey").value);await refreshAll()}};
-
-A("#resultSurvey").onchange=e=>loadResults(e.target.value);
-async function loadResults(surveyId){
- if(!surveyId)return;const data=await api("admin.getResults",{surveyId});currentResponses=data.responses||[];
- A("#resultSummary").innerHTML=(data.summary||[]).map(item=>{
-  if(item.type==="text"||item.type==="textarea")return `<div class="chart-block"><h3>${esc(item.question)}</h3><p>${item.answerCount} jawaban teks</p></div>`;
-  const max=Math.max(1,...item.options.map(x=>x.count));
-  return `<div class="chart-block"><h3>${esc(item.question)}</h3>${item.options.map(o=>`<div class="bar-row"><span>${esc(o.label)}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.round(o.count/max*100)}%"></div></div><b>${o.count}</b></div>`).join("")}</div>`;
- }).join("")||'<div class="empty-state">Belum ada respons untuk survei ini.</div>';
- renderResponses(data);
-}
-function renderResponses(data){
- const qs=data.questions||[],rows=data.responses||[];
- A("#responsesTable").innerHTML=rows.length?`<table class="admin-table"><thead><tr><th>Waktu</th><th>Nama</th>${qs.map(q=>`<th>${esc(q.text)}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.timestamp)}</td><td>${esc(r.respondentName||"Anonim")}</td>${qs.map(q=>`<td>${esc(Array.isArray(r.answers[q.id])?r.answers[q.id].join(", "):r.answers[q.id]||"")}</td>`).join("")}</tr>`).join("")}</tbody></table>`:'<div class="empty-state">Belum ada respons.</div>';
-}
-A("#exportCsvBtn").onclick=()=>{
- if(!currentResponses.length)return alert("Belum ada data.");
- const allQ=[...new Set(currentResponses.flatMap(r=>Object.keys(r.answers||{})))];
- const rows=[["Waktu","Nama","Kontak",...allQ],...currentResponses.map(r=>[r.timestamp,r.respondentName,r.respondentContact,...allQ.map(q=>Array.isArray(r.answers[q])?r.answers[q].join("|"):r.answers[q]||"")])];
- const csv=rows.map(row=>row.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\n");
- const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="being-voice-respons.csv";a.click();
-};
-
-(async()=>{
- if(token&&BeingAPI.configured()){
-  try{await api("admin.verify");setView(true);await refreshAll()}
-  catch(e){sessionStorage.removeItem("beingAdminToken");token="";setView(false)}
+ function showPanel(name){
+   $$(".admin-panel").forEach(x=>x.classList.toggle("active",x.id==="panel-"+name));
+   $$(".admin-menu [data-panel]").forEach(x=>x.classList.toggle("active",x.dataset.panel===name));
+   const map={overview:"Ringkasan",surveys:"Kelola Survei",builder:"Pertanyaan",results:"Hasil & Grafik"};
+   $("#panelTitle").textContent=map[name]||"BEING Voice";
+   if(name==="results")loadResults();
  }
- A("#questionType").dispatchEvent(new Event("change"));
+ async function verify(){
+   if(!token)return;
+   try{await api("admin.verify"); $("#loginView").hidden=true;$("#adminView").hidden=false;await refresh()}
+   catch(e){token="";sessionStorage.removeItem("bv_token")}
+ }
+ async function login(e){
+   e.preventDefault();
+   try{
+     const d=await BVAPI.call("admin.login",{pin:$("#adminPin").value}); token=d.token;sessionStorage.setItem("bv_token",token);
+     $("#loginView").hidden=true;$("#adminView").hidden=false;await refresh();
+   }catch(err){$("#loginNotice").innerHTML='<div class="notice error">'+esc(err.message)+'</div>'}
+ }
+ async function refresh(){
+   surveys=await api("admin.listSurveys");
+   renderOverview();renderSurveys();fillSelects();
+ }
+ function renderOverview(){
+   const active=surveys.filter(s=>s.status==="active").length, responses=surveys.reduce((a,s)=>a+Number(s.responseCount||0),0);
+   $("#statsGrid").innerHTML=`<div class="stat-card"><b>${surveys.length}</b><span>Total survei</span></div><div class="stat-card"><b>${active}</b><span>Aktif</span></div><div class="stat-card"><b>${responses}</b><span>Total respons</span></div>`;
+   $("#recentSurveys").innerHTML=surveys.slice(0,5).map(s=>`<div class="result-row"><b>${esc(s.title)}</b><span>${esc(s.status)} · ${s.responseCount||0} respons</span></div>`).join("")||"Belum ada survei.";
+ }
+ function renderSurveys(){
+   $("#surveyTable").innerHTML=surveys.map(s=>`<tr><td>${esc(s.title)}</td><td>${esc(s.category||"-")}</td><td>${esc(s.status)}</td><td>${s.questionCount||0}</td><td>${s.responseCount||0}</td><td><button class="voice-btn secondary small" data-edit-survey="${s.id}">Edit</button> <button class="voice-btn secondary small" data-del-survey="${s.id}">Hapus</button></td></tr>`).join("");
+ }
+ function fillSelects(){
+   const opt=surveys.map(s=>`<option value="${s.id}">${esc(s.title)}</option>`).join("");
+   $("#builderSurvey").innerHTML=opt;$("#resultSurvey").innerHTML=opt;
+   if(surveys.length)loadQuestions();
+ }
+ function openEditor(s){
+   $("#surveyEditor").classList.add("open"); $("#editorTitle").textContent=s?"Edit Survei":"Buat Survei";
+   $("#editSurveyId").value=s?.id||"";$("#editTitle").value=s?.title||"";$("#editDescription").value=s?.description||"";$("#editCategory").value=s?.category||"";
+   $("#editAccessMode").value=s?.accessMode||"public";$("#editAccessCode").value=s?.accessCode||"";$("#editIdentity").value=s?.identityMode||"anonymous";$("#editStatus").value=s?.status||"draft";$("#editEndDate").value=s?.endDate||"";
+   accessMode();
+ }
+ function closeEditor(){ $("#surveyEditor").classList.remove("open");}
+ function accessMode(){ $("#accessCodeWrap").style.display=$("#editAccessMode").value==="code"?"block":"none"; }
+ async function saveSurvey(e){
+   e.preventDefault();
+   await api("admin.saveSurvey",{id:$("#editSurveyId").value,title:$("#editTitle").value,description:$("#editDescription").value,category:$("#editCategory").value,accessMode:$("#editAccessMode").value,accessCode:$("#editAccessCode").value,identityMode:$("#editIdentity").value,status:$("#editStatus").value,endDate:$("#editEndDate").value});
+   closeEditor();await refresh();
+ }
+ async function loadQuestions(){
+   const sid=$("#builderSurvey").value;if(!sid)return;
+   questions=await api("admin.listQuestions",{surveyId:sid});
+   $("#questionCount").textContent=questions.length+" pertanyaan";
+   $("#questionList").innerHTML=questions.map((q,i)=>`<div class="question-builder-item"><b>${i+1}. ${esc(q.text)}</b><small>${esc(q.type)}${q.required?" · wajib":""}</small><div><button class="voice-btn secondary small" data-edit-q="${q.id}">Edit</button> <button class="voice-btn secondary small" data-del-q="${q.id}">Hapus</button></div></div>`).join("")||"Belum ada pertanyaan.";
+ }
+ function typeChanged(){
+   const t=$("#questionType").value;
+   $("#optionsWrap").hidden=!["radio","checkbox"].includes(t);
+   $("#fileSettingsWrap").hidden=t!=="file";
+ }
+ function resetQuestion(){
+   $("#questionForm").reset();$("#questionId").value="";typeChanged();
+ }
+ async function saveQuestion(e){
+   e.preventDefault();
+   const t=$("#questionType").value;
+   let options=[];
+   if(["radio","checkbox"].includes(t))options=$("#questionOptions").value.split(/\n/).map(x=>x.trim()).filter(Boolean);
+   if(t==="file")options=[{accept:$("#fileAccept").value,maxMb:Number($("#fileMaxMb").value||5)}];
+   await api("admin.saveQuestion",{id:$("#questionId").value,surveyId:$("#builderSurvey").value,text:$("#questionText").value,type:t,required:$("#questionRequired").checked,options});
+   resetQuestion();await loadQuestions();await refresh();
+ }
+ async function loadResults(){
+   const sid=$("#resultSurvey").value;if(!sid){$("#resultSummary").innerHTML="";$("#responsesTable").innerHTML="";return}
+   const d=await api("admin.getResults",{surveyId:sid});
+   $("#resultSummary").innerHTML=(d.summary||[]).map(s=>`<div class="chart-card"><b>${esc(s.question)}</b><span>${s.options?s.options.map(o=>esc(o.label)+": "+o.count).join(" · "):(s.answerCount||0)+" jawaban"}</span></div>`).join("");
+   const qmap={};(d.questions||[]).forEach(q=>qmap[q.id]=q.text);
+   const rows=(d.responses||[]).map(r=>{
+     const ans=Object.entries(r.answers||{}).map(([qid,v])=>{
+       let show=v;
+       if(v&&typeof v==="object"&&!Array.isArray(v)&&v.url) show=`<a href="${esc(v.url)}" target="_blank" rel="noopener">📎 ${esc(v.name||"Buka berkas")}</a>`;
+       else if(Array.isArray(v)) show=esc(v.join(", "));
+       else show=esc(v);
+       return `<div><b>${esc(qmap[qid]||qid)}:</b> ${show}</div>`;
+     }).join("");
+     return `<tr><td>${esc(r.timestamp)}</td><td>${esc(r.respondentName||"Anonim")}</td><td>${esc(r.respondentContact||"-")}</td><td>${ans}</td></tr>`;
+   }).join("");
+   $("#responsesTable").innerHTML=`<table class="admin-table"><thead><tr><th>Waktu</th><th>Nama</th><th>Kontak</th><th>Jawaban / Berkas</th></tr></thead><tbody>${rows}</tbody></table>`;
+ }
+ function exportCsv(){
+   const sid=$("#resultSurvey").value;if(!sid)return;
+   api("admin.getResults",{surveyId:sid}).then(d=>{
+     const qs=d.questions||[], head=["timestamp","respondentName","respondentContact",...qs.map(q=>q.text)];
+     const lines=[head,...(d.responses||[]).map(r=>[r.timestamp,r.respondentName,r.respondentContact,...qs.map(q=>{const v=r.answers?.[q.id];return v&&v.url?v.url:Array.isArray(v)?v.join(" | "):(v??"")})])];
+     const csv=lines.map(row=>row.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\n");
+     const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv"}));a.download="being-voice.csv";a.click();URL.revokeObjectURL(a.href);
+   });
+ }
+ document.addEventListener("click",async e=>{
+   const p=e.target.closest("[data-panel]");if(p)showPanel(p.dataset.panel);
+   if(e.target.matches("[data-edit-survey]"))openEditor(surveys.find(s=>s.id===e.target.dataset.editSurvey));
+   if(e.target.matches("[data-del-survey]")&&confirm("Hapus survei dan seluruh responsnya?")){await api("admin.deleteSurvey",{surveyId:e.target.dataset.delSurvey});await refresh()}
+   if(e.target.matches("[data-edit-q]")){
+     const q=questions.find(x=>x.id===e.target.dataset.editQ);if(!q)return;
+     $("#questionId").value=q.id;$("#questionText").value=q.text;$("#questionType").value=q.type;$("#questionRequired").checked=!!q.required;
+     if(["radio","checkbox"].includes(q.type))$("#questionOptions").value=(q.options||[]).join("\n");
+     if(q.type==="file"){const c=(q.options&&q.options[0])||{};$("#fileAccept").value=c.accept||".pdf,.jpg,.jpeg,.png,.doc,.docx";$("#fileMaxMb").value=String(c.maxMb||5)}
+     typeChanged();
+   }
+   if(e.target.matches("[data-del-q]")&&confirm("Hapus pertanyaan ini?")){await api("admin.deleteQuestion",{questionId:e.target.dataset.delQ});await loadQuestions();await refresh()}
+ });
+ $("#loginForm").addEventListener("submit",login);$("#logoutBtn").addEventListener("click",()=>{sessionStorage.removeItem("bv_token");location.reload()});
+ $("#newSurveyBtn").addEventListener("click",()=>openEditor(null));$("#newSurveyBtn2").addEventListener("click",()=>openEditor(null));$("#closeEditor").addEventListener("click",closeEditor);$("#cancelEditor").addEventListener("click",closeEditor);
+ $("#surveyEditorForm").addEventListener("submit",saveSurvey);$("#editAccessMode").addEventListener("change",accessMode);$("#generateCodeBtn").addEventListener("click",()=>$("#editAccessCode").value="BEING"+Math.floor(1000+Math.random()*9000));
+ $("#builderSurvey").addEventListener("change",loadQuestions);$("#questionType").addEventListener("change",typeChanged);$("#questionForm").addEventListener("submit",saveQuestion);
+ $("#resultSurvey").addEventListener("change",loadResults);$("#exportCsvBtn").addEventListener("click",exportCsv);
+ typeChanged(); verify();
 })();
