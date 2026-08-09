@@ -101,5 +101,8 @@
  $("#closeModal")?.addEventListener("click",close); $("#cancelSurvey")?.addEventListener("click",close);
  $("#surveyForm")?.addEventListener("submit",submit);
  const qs=new URLSearchParams(location.search); accessKey=qs.get("key")||""; accessCode=qs.get("code")||"";
- loadSurveys();
+ const directSurvey=qs.get("survey")||"";
+ loadSurveys().then(()=>{
+   if(directSurvey)openSurvey(directSurvey).catch(err=>alert(err.message));
+ });
 })();

@@ -33,7 +33,7 @@
    $("#recentSurveys").innerHTML=surveys.slice(0,5).map(s=>`<div class="result-row"><b>${esc(s.title)}</b><span>${esc(s.status)} · ${s.responseCount||0} respons</span></div>`).join("")||"Belum ada survei.";
  }
  function renderSurveys(){
-   $("#surveyTable").innerHTML=surveys.map(s=>`<tr><td>${esc(s.title)}</td><td>${esc(s.category||"-")}</td><td>${esc(s.status)}</td><td>${s.questionCount||0}</td><td>${s.responseCount||0}</td><td><button class="voice-btn secondary small" data-edit-survey="${s.id}">Edit</button> <button class="voice-btn secondary small" data-del-survey="${s.id}">Hapus</button></td></tr>`).join("");
+   $("#surveyTable").innerHTML=surveys.map(s=>`<tr><td>${esc(s.title)}</td><td>${esc(s.category||"-")}</td><td>${esc(s.status)}</td><td>${s.questionCount||0}</td><td>${s.responseCount||0}</td><td><button class="voice-btn primary small" data-share-survey="${s.id}">Bagikan</button> <button class="voice-btn secondary small" data-edit-survey="${s.id}">Edit</button> <button class="voice-btn secondary small" data-del-survey="${s.id}">Hapus</button></td></tr>`).join("");
  }
  function fillSelects(){
    const opt=surveys.map(s=>`<option value="${s.id}">${esc(s.title)}</option>`).join("");
@@ -102,8 +102,43 @@
      const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv"}));a.download="being-voice.csv";a.click();URL.revokeObjectURL(a.href);
    });
  }
+
+ function surveyShareData(s){
+   const u=new URL("suara-anda.html",location.href);
+   u.searchParams.set("survey",s.id);
+   const mode=s.accessMode||"public";
+   if(mode==="link" && s.shareKey) u.searchParams.set("key",s.shareKey);
+
+   let text=`${s.title}\n\nSilakan isi survei BEING melalui link berikut:\n${u.toString()}`;
+   if(mode==="code" && s.accessCode){
+     text+=`\n\nKode akses: ${s.accessCode}`;
+   }
+   return {url:u.toString(),text};
+ }
+
+ async function shareSurvey(s){
+   const d=surveyShareData(s);
+   if(navigator.share){
+     try{
+       await navigator.share({title:s.title,text:d.text});
+       return;
+     }catch(err){
+       if(err && err.name==="AbortError") return;
+     }
+   }
+   try{
+     await navigator.clipboard.writeText(d.text);
+     alert("Link survei sudah disalin. Silakan tempel ke WhatsApp, email, atau media lainnya.");
+   }catch(err){
+     prompt("Salin link survei berikut:",d.text);
+   }
+ }
  document.addEventListener("click",async e=>{
    const p=e.target.closest("[data-panel]");if(p)showPanel(p.dataset.panel);
+   if(e.target.matches("[data-share-survey]")){
+     const s=surveys.find(x=>x.id===e.target.dataset.shareSurvey);
+     if(s)await shareSurvey(s);
+   }
    if(e.target.matches("[data-edit-survey]"))openEditor(surveys.find(s=>s.id===e.target.dataset.editSurvey));
    if(e.target.matches("[data-del-survey]")&&confirm("Hapus survei dan seluruh responsnya?")){await api("admin.deleteSurvey",{surveyId:e.target.dataset.delSurvey});await refresh()}
    if(e.target.matches("[data-edit-q]")){
